@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OC Randomizer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-950 text-white min-h-screen flex items-center justify-center p-6 overflow-hidden">
+
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.15),transparent_40%)]"></div>
+
+  <div class="relative w-full max-w-3xl backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 shadow-2xl">
+
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-4xl font-black tracking-tight">OC RANDOMIZER</h1>
+        <p class="text-zinc-400 mt-1">Klo Artblock Mending Kesini.</p>
+      </div>
+
+      <button onclick="generateOC()"
+        class="bg-white text-black px-5 py-3 rounded-2xl font-bold hover:scale-105 active:scale-95 transition">
+        Randomize
+      </button>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5">
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+        <h2 class="text-xl font-bold mb-4">Basic Info</h2>
+
+        <div class="space-y-3 text-zinc-300">
+          
+          <p><span class="text-white font-semibold">Gender:</span> <span id="gender"></span></p>
+          <p><span class="text-white font-semibold">Umur:</span> <span id="age"></span></p>
+          <p><span class="text-white font-semibold">Ras:</span> <span id="race"></span></p>
+          <p><span class="text-white font-semibold">Role:</span> <span id="role"></span></p>
+          <p><span class="text-white font-semibold">Personality:</span> <span id="personality"></span></p>
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+        <h2 class="text-xl font-bold mb-4">Appearance</h2>
+
+        <div class="space-y-3 text-zinc-300">
+          <p><span class="text-white font-semibold">Warna Kulit:</span> <span id="skin"></span></p>
+          <p><span class="text-white font-semibold">Warna Mata:</span> <span id="eyes"></span></p>
+          <p><span class="text-white font-semibold">Warna Rambut:</span> <span id="hair"></span></p>
+          <p><span class="text-white font-semibold">Style Rambut:</span> <span id="hairstyle"></span></p>
+          <p><span class="text-white font-semibold">Outfit:</span> <span id="outfit"></span></p>
+          <p><span class="text-white font-semibold">Aksesori:</span> <span id="accessory"></span></p>
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 md:col-span-2">
+        <h2 class="text-xl font-bold mb-4">Lore</h2>
+
+        <div class="space-y-3 text-zinc-300">
+          <p><span class="text-white font-semibold">Power:</span> <span id="power"></span></p>
+          <p><span class="text-white font-semibold">Weapon:</span> <span id="weapon"></span></p>
+          <p><span class="text-white font-semibold">Origin:</span> <span id="origin"></span></p>
+          <p><span class="text-white font-semibold">Goal:</span> <span id="goal"></span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+      const data = {
+        gender: [
+          'Male',
+          'Female'
+        ],
+
+        age: [
+          '16',
+          '18',
+          '21',
+          '24',
+          '27',
+          'Unknown',
+          'Ancient'
+        ],
+
+        race: [
+          { name: 'Human', weight: 35 },
+          { name: 'Elf', weight: 20 },
+          { name: 'Dark Elf', weight: 10 },
+          { name: 'High Elf', weight: 8 },
+          { name: 'Demon', weight: 10 },
+          { name: 'Angel', weight: 6 },
+          { name: 'Dragonborn', weight: 4 },
+          { name: 'Vampire', weight: 8 },
+          { name: 'Werewolf', weight: 7 },
+          { name: 'Kitsune', weight: 6 },
+          { name: 'Neko', weight: 8 },
+          { name: 'Fairy', weight: 5 },
+          { name: 'Orc', weight: 5 },
+          { name: 'Goblin', weight: 4 },
+          { name: 'Slimefolk', weight: 3 },
+          { name: 'Undead', weight: 5 },
+          { name: 'Spirit', weight: 6 },
+          { name: 'Phoenix Human', weight: 2 },
+          { name: 'Dryad', weight: 3 },
+          { name: 'Merfolk', weight: 3 },
+          { name: 'Giant', weight: 2 },
+          { name: 'Half Demon', weight: 5 },
+          { name: 'Half Angel', weight: 4 },
+          { name: 'Ancient Beast', weight: 1 },
+          { name: 'Shadow Creature', weight: 2 }
+        ],
+
+        role: [
+          'Knight',
+          'Mage',
+          'Archmage',
+          'Assassin',
+          'Mercenary',
+          'Samurai',
+          'Royal Guard',
+          'Necromancer',
+          'Priest',
+          'Paladin',
+          'Monster Hunter',
+          'Dragon Slayer',
+          'Beast Tamer',
+          'Witch',
+          'Alchemist',
+          'Bounty Hunter',
+          'Traveler',
+          'Prince',
+          'Princess',
+          'King',
+          'Queen',
+          'Cultist',
+          'Arena Fighter',
+          'Explorer',
+          'Spirit Caller',
+          'Rune Keeper',
+          'Swordmaster',
+          'Forest Guardian',
+          'Oracle',
+          'Reaper'
+        ],
+
+        personality: [
+          'Calm',
+          'Cold',
+          'Chaotic',
+          'Friendly',
+          'Wise',
+          'Manipulative',
+          'Energetic',
+          'Brave',
+          'Cowardly',
+          'Elegant',
+          'Mysterious',
+          'Arrogant',
+          'Silent',
+          'Loyal',
+          'Aggressive',
+          'Curious',
+          'Melancholic',
+          'Playful'
+        ],
+
+        skin: [
+          'Pale',
+          'Fair',
+          'Tan',
+          'Dark Brown',
+          'Golden',
+          'Gray',
+          'Ashen',
+          'Bluish',
+          'Crimson Marked'
+        ],
+
+        eyes: [
+          'Blue',
+          'Red',
+          'Golden',
+          'Emerald',
+          'Purple',
+          'Silver',
+          'White Glow',
+          'Black Void',
+          'Heterochromia',
+          'Crimson Glow'
+        ],
+
+        hair: [
+          'Black',
+          'Silver',
+          'White',
+          'Blonde',
+          'Red',
+          'Blue',
+          'Pink',
+          'Purple',
+          'Ash Gray',
+          'Golden'
+        ],
+
+        hairstyle: [
+          'Long Straight',
+          'Wolf Cut',
+          'Messy Short',
+          'Braided',
+          'High Ponytail',
+          'Curly',
+          'Twin Tail',
+          'Flowing Long Hair',
+          'Layered Hair',
+          'Battle Worn Hair'
+        ],
+
+        outfit: [
+          'Royal Armor',
+          'Dark Cloak',
+          'Mage Robe',
+          'Knight Armor',
+          'Traveler Outfit',
+          'Samurai Clothing',
+          'Priest Garment',
+          'Assassin Hood',
+          'Forest Garment',
+          'Battle Dress',
+          'Ancient Robe',
+          'Dragon Scale Armor',
+          'Elegant Noble Wear',
+          'Hunter Outfit'
+        ],
+
+        accessory: [
+          'Eyepatch',
+          'Magic Necklace',
+          'Cursed Ring',
+          'Ancient Earrings',
+          'Mask',
+          'Cape',
+          'Horn Ornament',
+          'Halo',
+          'Flower Crown',
+          'Magic Book',
+          'Crystal Pendant',
+          'Dragon Tooth Necklace',
+          'Rune Bracelet'
+        ],
+
+        power: [
+          { name: 'None', weight: 90 },
+          { name: 'Fire Magic', weight: 20 },
+          { name: 'Ice Magic', weight: 15 },
+          { name: 'Shadow Manipulation', weight: 8 },
+          { name: 'Light Magic', weight: 10 },
+          { name: 'Blood Magic', weight: 5 },
+          { name: 'Time Control', weight: 2 },
+          { name: 'Wind Control', weight: 14 },
+          { name: 'Earth Magic', weight: 14 },
+          { name: 'Lightning Magic', weight: 10 },
+          { name: 'Illusion', weight: 7 },
+          { name: 'Necromancy', weight: 4 },
+          { name: 'Healing', weight: 12 },
+          { name: 'Teleportation', weight: 5 },
+          { name: 'Soul Manipulation', weight: 2 },
+          { name: 'Beast Summoning', weight: 7 },
+          { name: 'Curse Magic', weight: 4 },
+          { name: 'Dream Walking', weight: 2 },
+          { name: 'Phoenix Flame', weight: 1 }
+        ],
+
+        weapon: [
+            { name: 'Katana', weight: 12 },
+            { name: 'Greatsword', weight: 18 },
+            { name: 'Magic Staff', weight: 20 },
+            { name: 'Dual Daggers', weight: 14 },
+            { name: 'Scythe', weight: 5 },
+            { name: 'Bow', weight: 15 },
+            { name: 'Crossbow', weight: 10 },
+            { name: 'Spear', weight: 14 },
+            { name: 'Halberd', weight: 8 },
+            { name: 'Battle Axe', weight: 10 },
+            { name: 'Twin Blades', weight: 9 },
+            { name: 'Magic Orb', weight: 7 },
+            { name: 'Whip Sword', weight: 3 },
+            { name: 'Chains', weight: 2 },
+            { name: 'Hammer', weight: 8 },
+            { name: 'Rapier', weight: 9 },
+            { name: 'Trident', weight: 4 },
+            { name: 'Runic Blade', weight: 3 },
+            { name: 'Dragon Slayer Sword', weight: 1 },
+            { name: 'Cursed Blade', weight: 2 }
+          ],
+
+        origin: [
+          'Forgotten Kingdom',
+          'Ancient Forest',
+          'Floating Island',
+          'Underground Empire',
+          'Ruined Castle',
+          'Sacred Temple',
+          'Frozen Land',
+          'Demon Realm',
+          'Celestial Kingdom',
+          'Dragon Mountain',
+          'Hidden Village',
+          'Cursed Battlefield'
+        ],
+
+        goal: [
+          'Protect The Kingdom',
+          'Destroy The Demon Lord',
+          'Find Ancient Artifact',
+          'Break A Curse',
+          'Become Strongest',
+          'Take Revenge',
+          'Protect Someone Important',
+          'Restore Balance',
+          'Seal Ancient Evil',
+          'Find Lost Memories',
+          'Revive Fallen Kingdom',
+          'Master Forbidden Magic'
+        ]
+}
+
+    function random(arr) {
+      return arr[Math.floor(Math.random() * arr.length)]
+    }
+
+    function weightedRandom(arr) {
+      let totalWeight = arr.reduce((sum, item) => sum + item.weight, 0)
+
+      let randomNum = Math.random() * totalWeight
+
+      for (let item of arr) {
+        if (randomNum < item.weight) {
+          return item.name
+        }
+
+        randomNum -= item.weight
+      }
+    }
+
+    function set(id, value) {
+      document.getElementById(id).innerText = value
+    }
+
+    function generateOC() {
+      set('gender', random(data.gender))
+      set('age', random(data.age))
+      set('race', weightedRandom(data.race))
+      set('role', random(data.role))
+      set('personality', random(data.personality))
+
+      set('skin', random(data.skin))
+      set('eyes', random(data.eyes))
+      set('hair', random(data.hair))
+      set('hairstyle', random(data.hairstyle))
+      set('outfit', random(data.outfit))
+      set('accessory', random(data.accessory))
+
+      set('power', weightedRandom(data.power))
+      set('weapon', weightedRandom(data.weapon))
+      set('origin', random(data.origin))
+      set('goal', random(data.goal))
+    }
+
+    generateOC()
+  </script>
+</body>
+</html>
